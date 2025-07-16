@@ -44,9 +44,10 @@ async function iniciarBot() {
 
   sock.ev.on('connection.update', ({ connection, lastDisconnect, qr }) => {
     if (qr) {
-      qrcode.generate(qr, { small: true });
-      console.log('📲 Escanea el QR para vincular tu WhatsApp');
-    }
+  const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`;
+  console.log(`📲 Escanea el QR desde esta URL: ${url}`);
+}
+
 
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode;
