@@ -1,0 +1,9 @@
+services:
+  - type: worker
+    name: mi-amor-bot
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: 'npm install'
+    startCommand: 'node index.cjs'
+    repo: https://github.com/interclases2025/bot-cartas1
