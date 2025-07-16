@@ -1,0 +1,11 @@
+{
+  "name": "bot-cartas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "baileys": "^6.7.18",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
