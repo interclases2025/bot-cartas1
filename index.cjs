@@ -1,11 +1,9 @@
 const {
   default: makeWASocket,
-  useMultiFileAuthState,
   fetchLatestBaileysVersion,
-  DisconnectReason
+  useMultiFileAuthState,
+  DisconnectReason,
 } = require('@whiskeysockets/baileys');
-
-const qrcode = require('qrcode-terminal');
 const fs = require('fs');
 
 // 💌 Cargar cartas
@@ -25,18 +23,16 @@ try {
   contador = 0;
 }
 
-// 🔐 Solo ella puede activar el bot
-const numeroPermitido = '573146530203@s.whatsapp.net'; // <-- cámbialo por el número real de tu novia
+// 🔐 Solo ella puede activar el bot (formato internacional sin +, termina en @s.whatsapp.net)
+const numeroPermitido = '573146530203@s.whatsapp.net'; // ← cámbialo por el número real de tu novia
 
 async function iniciarBot() {
-  // 🔐 Autenticación multiarchivo (ideal para Railway y local)
   const { state, saveCreds } = await useMultiFileAuthState('./auth');
   const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     auth: state,
     version,
-    printQRInTerminal: true, // 🔁 Siempre imprime QR si no hay sesión
     browser: ['Windows', 'Chrome', '100.0']
   });
 
@@ -44,10 +40,9 @@ async function iniciarBot() {
 
   sock.ev.on('connection.update', ({ connection, lastDisconnect, qr }) => {
     if (qr) {
-  const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`;
-  console.log(`📲 Escanea el QR desde esta URL: ${url}`);
-}
-
+      const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`;
+      console.log(`📲 Escanea el QR desde esta URL: ${url}`);
+    }
 
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode;
